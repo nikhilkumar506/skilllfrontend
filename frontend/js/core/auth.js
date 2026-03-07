@@ -1,9 +1,9 @@
-console.log("auth.js loaded");
+console.log("core/auth.js loaded");
 
+/* ===== BACKEND URL ===== */
 const API_URL = "https://skilllcertify-backend.onrender.com/api/auth";
 
 /* ================= REGISTER ================= */
-
 window.registerUser = async function (data) {
   try {
     const res = await fetch(`${API_URL}/register`, {
@@ -16,13 +16,12 @@ window.registerUser = async function (data) {
 
     return await res.json();
   } catch (err) {
-    console.error(err);
-    return { error: "Server error" };
+    console.error("Register error:", err);
+    return { message: "Server error" };
   }
 };
 
 /* ================= LOGIN ================= */
-
 window.loginUser = async function (data) {
   try {
     const res = await fetch(`${API_URL}/login`, {
@@ -35,7 +34,7 @@ window.loginUser = async function (data) {
 
     return await res.json();
   } catch (err) {
-    console.error(err);
-    return { error: "Server error" };
+    console.error("Login error:", err);
+    return { message: "Server error" };
   }
 };
