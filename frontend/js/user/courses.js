@@ -1,7 +1,6 @@
 console.log("✅ Browse Courses JS loaded");
 
-const API_BASE = "http://localhost:5000/api";
-const token = localStorage.getItem("token");
+const API_BASE = "https://skilllcertify-backend.onrender.com/api";const token = localStorage.getItem("token");
 
 /* ================= LOAD COURSES ================= */
 async function loadCourses() {
