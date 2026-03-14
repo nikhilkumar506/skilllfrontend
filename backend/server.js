@@ -10,7 +10,13 @@ const PORT = process.env.PORT || 10000;
 
 /* ------------ Middlewares ------------ */
 
-app.use(cors()); // Netlify frontend ko allow karega
+app.use(cors({
+  origin: "*",
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"]
+}));
+
+app.options("*", cors()); // Netlify frontend ko allow karega
 app.use(express.json());
 
 /* ------------ Test Route ------------ */
