@@ -4,7 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const courseRoutes = require("./routes/course.routes");
 const enrollmentRoutes = require("./routes/enrollment.routes");
-
+const adminRoutes = require("./routes/admin.routes");
 const app = express();
 
 /* ================= CORS FIX ================= */
@@ -18,7 +18,8 @@ app.options("*", cors());
 
 /* ================= MIDDLEWARE ================= */
 app.use(express.json());
-
+// =================admin routes===============//
+app.use("/api/admin", adminRoutes);
 /* ================= ROUTES ================= */
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
