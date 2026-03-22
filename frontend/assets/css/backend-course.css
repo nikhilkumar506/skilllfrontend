@@ -1,0 +1,239 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: #e2e8f0;
+  line-height: 1.7;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* HEADINGS */
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #38bdf8;
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px;
+  color: #22c55e;
+  margin-bottom: 10px;
+}
+
+/* CARD DESIGN */
+.card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* TEXT */
+p {
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+/* CODE BLOCK */
+pre {
+  background: #020617;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-top: 10px;
+  color: #38bdf8;
+  font-size: 14px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table, th, td {
+  border: 1px solid #334155;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* BUTTON */
+button {
+  margin-top: 15px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+/* SUCCESS MESSAGE */
+.success {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #22c55e;
+  background: rgba(34,197,94,0.1);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* QUIZ */
+#quiz label {
+  display: block;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: #e2e8f0;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #22c55e;
+  margin-bottom: 10px;
+}
+
+.card {
+  background: rgba(30, 41, 59, 0.6);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+ul {
+  margin-left: 20px;
+}
+
+pre {
+  background: #020617;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+  color: #38bdf8;
+}
+
+table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #334155;
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background: #3b82f6;
+}
+
+.success {
+  margin-top: 15px;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 24px;
+  }
+}

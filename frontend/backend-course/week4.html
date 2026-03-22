@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backend Development - Week 4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../assets/css/backend-course.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Week 4: MongoDB – Database & CRUD Operations</h1>
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>📌 What is a Database?</h2>
+    <p>
+      A database is used to store and manage application data.
+      Without a database, your application cannot save user information.
+    </p>
+
+    <p>
+      Example: User login data, posts, comments — all are stored in a database.
+    </p>
+  </div>
+
+  <!-- MONGODB -->
+  <div class="card">
+    <h2>🍃 What is MongoDB?</h2>
+    <p>
+      MongoDB is a NoSQL database that stores data in JSON-like format.
+      It is flexible, scalable, and widely used in modern applications.
+    </p>
+
+    <ul>
+      <li>No tables → Uses collections</li>
+      <li>No rows → Uses documents</li>
+      <li>Data stored as JSON</li>
+    </ul>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div class="card">
+    <h2>📊 MongoDB Structure</h2>
+
+    <ul>
+      <li><b>Database</b> → Main container</li>
+      <li><b>Collection</b> → Group of data</li>
+      <li><b>Document</b> → Single record</li>
+    </ul>
+
+    <pre>
+{
+  name: "akhilesh",
+  email: "akhilesh@gmail.com"
+}
+    </pre>
+  </div>
+
+  <!-- SETUP -->
+  <div class="card">
+    <h2>⚙️ Setup MongoDB</h2>
+
+    <p>Install mongoose:</p>
+
+    <pre>
+npm install mongoose
+    </pre>
+
+    <p>Connect database:</p>
+
+    <pre>
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://127.0.0.1:27017/zertix")
+.then(() => console.log("DB Connected"))
+.catch(err => console.log(err));
+    </pre>
+  </div>
+
+  <!-- SCHEMA -->
+  <div class="card">
+    <h2>📦 Schema & Model</h2>
+
+    <pre>
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String
+});
+
+const User = mongoose.model("User", userSchema);
+    </pre>
+  </div>
+
+  <!-- CRUD -->
+  <div class="card">
+    <h2>🔁 CRUD Operations</h2>
+
+    <p><b>Create:</b></p>
+    <pre>
+await User.create({ name: "akhilesh", email: "test@gmail.com" });
+    </pre>
+
+    <p><b>Read:</b></p>
+    <pre>
+const users = await User.find();
+    </pre>
+
+    <p><b>Update:</b></p>
+    <pre>
+await User.updateOne({ name: "akhilesh" }, { email: "new@gmail.com" });
+    </pre>
+
+    <p><b>Delete:</b></p>
+    <pre>
+await User.deleteOne({ name: "akhilesh" });
+    </pre>
+  </div>
+
+  <!-- EXPRESS CONNECT -->
+  <div class="card">
+    <h2>🔗 Connect MongoDB with Express</h2>
+
+    <pre>
+app.post("/add-user", async (req, res) => {
+  const user = await User.create(req.body);
+  res.json(user);
+});
+    </pre>
+  </div>
+
+  <!-- REAL WORLD -->
+  <div class="card">
+    <h2>🧠 Real-World Example</h2>
+
+    <p>
+      When a user signs up:
+    </p>
+
+    <ul>
+      <li>Frontend sends user data</li>
+      <li>Backend receives data</li>
+      <li>MongoDB stores it</li>
+      <li>User account is created</li>
+    </ul>
+  </div>
+
+  <!-- TASK -->
+  <div class="card">
+    <h2>💡 Practice Task</h2>
+
+    <ul>
+      <li>Install MongoDB & mongoose</li>
+      <li>Create a user schema</li>
+      <li>Add 1 API to store user</li>
+      <li>Fetch users using GET API</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quiz">
+    <h2>📝 Quiz</h2>
+
+    <p>1. MongoDB stores data in?</p>
+    <label><input type="radio" name="q1"> Tables</label><br>
+    <label><input type="radio" name="q1"> JSON Documents</label><br>
+
+    <p>2. CRUD stands for?</p>
+    <label><input type="radio" name="q2"> Create Read Update Delete</label><br>
+    <label><input type="radio" name="q2"> Copy Remove Use Data</label><br>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="success" style="display:none;">
+    ✅ Quiz submitted successfully. Continue your course.
+  </div>
+
+  <!-- NEXT -->
+  <button onclick="nextWeek()">Next Week →</button>
+
+</div>
+
+<script>
+function submitQuiz() {
+  localStorage.setItem("backend-week4", "completed");
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("success").style.display = "block";
+}
+
+function nextWeek() {
+  window.location.href = "week5.html";
+}
+</script>
+
+</body>
+</html>

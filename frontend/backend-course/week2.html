@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backend Development - Week 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../assets/css/backend-course.css">
+<body>
+
+<div class="container">
+
+  <h1>Week 2: Node.js – Runtime & Core Concepts</h1>
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>📌 What is Node.js?</h2>
+    <p>
+      Node.js is a JavaScript runtime environment that allows you to run JavaScript outside the browser.
+      It is mainly used for building backend applications and server-side logic.
+    </p>
+
+    <p>
+      Before Node.js, JavaScript was only used in browsers. But with Node.js,
+      developers can build full backend systems using JavaScript.
+    </p>
+  </div>
+
+  <!-- WHY NODE -->
+  <div class="card">
+    <h2>🚀 Why Node.js is Powerful?</h2>
+    <ul>
+      <li>Single language for frontend & backend</li>
+      <li>Fast execution (V8 engine)</li>
+      <li>Asynchronous & non-blocking</li>
+      <li>Huge ecosystem (npm)</li>
+    </ul>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="card">
+    <h2>⚙️ How Node.js Works (Event Loop)</h2>
+    <p>
+      Node.js uses an event-driven, non-blocking architecture.
+      This means it can handle multiple requests at the same time efficiently.
+    </p>
+
+    <p>
+      Instead of waiting for one task to complete, Node.js continues executing other tasks.
+    </p>
+  </div>
+
+  <!-- MODULES -->
+  <div class="card">
+    <h2>📦 Modules in Node.js</h2>
+
+    <p>Node.js is modular. Everything is divided into modules.</p>
+
+    <ul>
+      <li><b>Core Modules:</b> fs, http, path</li>
+      <li><b>Custom Modules:</b> Your own files</li>
+      <li><b>Third-party Modules:</b> Installed via npm</li>
+    </ul>
+  </div>
+
+  <!-- FS MODULE -->
+  <div class="card">
+    <h2>📂 File System Module (fs)</h2>
+
+    <p>Used to read and write files.</p>
+
+    <pre>
+const fs = require("fs");
+
+fs.writeFileSync("test.txt", "Hello Backend");
+    </pre>
+  </div>
+
+  <!-- HTTP -->
+  <div class="card">
+    <h2>🌐 Creating a Server (http module)</h2>
+
+    <pre>
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  res.end("Hello from Backend");
+});
+
+server.listen(3000);
+    </pre>
+
+    <p>
+      This is your first backend server.
+    </p>
+  </div>
+
+  <!-- NPM -->
+  <div class="card">
+    <h2>📦 What is NPM?</h2>
+
+    <p>
+      NPM (Node Package Manager) is used to install libraries and tools.
+    </p>
+
+    <pre>
+npm init -y
+npm install express
+    </pre>
+  </div>
+
+  <!-- REAL WORLD -->
+  <div class="card">
+    <h2>🧠 Real-World Example</h2>
+
+    <p>
+      When you open a website, Node.js server handles the request,
+      processes data, and sends response to the browser.
+    </p>
+  </div>
+
+  <!-- TASK -->
+  <div class="card">
+    <h2>💡 Mini Task</h2>
+
+    <ul>
+      <li>Install Node.js</li>
+      <li>Create a file: app.js</li>
+      <li>Write console.log("Hello Backend")</li>
+      <li>Run: node app.js</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quiz">
+    <h2>📝 Quiz</h2>
+
+    <p>1. Node.js runs JavaScript in?</p>
+    <label><input type="radio" name="q1"> Browser</label><br>
+    <label><input type="radio" name="q1"> Server</label><br>
+
+    <p>2. Which module creates server?</p>
+    <label><input type="radio" name="q2"> fs</label><br>
+    <label><input type="radio" name="q2"> http</label><br>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="success" style="display:none;">
+    ✅ Quiz submitted successfully. Continue your course.
+  </div>
+
+  <!-- NEXT -->
+  <button onclick="nextWeek()">Next Week →</button>
+
+</div>
+
+<script>
+function submitQuiz() {
+  localStorage.setItem("backend-week2", "completed");
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("success").style.display = "block";
+}
+
+function nextWeek() {
+  window.location.href = "week3.html";
+}
+</script>
+
+</body>
+</html>

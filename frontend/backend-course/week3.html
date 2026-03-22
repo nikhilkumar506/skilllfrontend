@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backend Development - Week 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../assets/css/backend-course.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Week 3: Express.js – Building Real APIs</h1>
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>📌 What is Express.js?</h2>
+    <p>
+      Express.js is a lightweight web framework for Node.js that helps you build
+      APIs and backend applications easily.
+    </p>
+
+    <p>
+      Instead of writing complex server code using the http module,
+      Express simplifies everything using routes and middleware.
+    </p>
+  </div>
+
+  <!-- WHY EXPRESS -->
+  <div class="card">
+    <h2>🚀 Why Use Express?</h2>
+    <ul>
+      <li>Simple and fast</li>
+      <li>Easy routing system</li>
+      <li>Middleware support</li>
+      <li>Used in real-world projects</li>
+    </ul>
+  </div>
+
+  <!-- SETUP -->
+  <div class="card">
+    <h2>⚙️ Setup Express</h2>
+
+    <pre>
+npm init -y
+npm install express
+    </pre>
+
+    <p>Create a file: <b>server.js</b></p>
+  </div>
+
+  <!-- BASIC SERVER -->
+  <div class="card">
+    <h2>🌐 Create Your First Express Server</h2>
+
+    <pre>
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello from Express");
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+    </pre>
+  </div>
+
+  <!-- ROUTES -->
+  <div class="card">
+    <h2>🛣️ Routing in Express</h2>
+
+    <pre>
+app.get("/users", (req, res) => {
+  res.send("All users");
+});
+
+app.post("/login", (req, res) => {
+  res.send("User login");
+});
+    </pre>
+
+    <p>
+      GET → fetch data<br>
+      POST → send data
+    </p>
+  </div>
+
+  <!-- MIDDLEWARE -->
+  <div class="card">
+    <h2>🧠 Middleware Concept</h2>
+
+    <p>
+      Middleware runs between request and response.
+      It is used for validation, logging, and security.
+    </p>
+
+    <pre>
+app.use((req, res, next) => {
+  console.log("Request received");
+  next();
+});
+    </pre>
+  </div>
+
+  <!-- JSON -->
+  <div class="card">
+    <h2>📦 Handling JSON Data</h2>
+
+    <pre>
+app.use(express.json());
+
+app.post("/data", (req, res) => {
+  console.log(req.body);
+  res.send("Data received");
+});
+    </pre>
+  </div>
+
+  <!-- MINI PROJECT -->
+  <div class="card">
+    <h2>🚀 Mini Project: Simple API</h2>
+
+    <p>Create a basic user API:</p>
+
+    <pre>
+let users = [];
+
+app.post("/add-user", (req, res) => {
+  users.push(req.body);
+  res.send("User added");
+});
+
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+    </pre>
+  </div>
+
+  <!-- REAL WORLD -->
+  <div class="card">
+    <h2>🧠 Real-World Use</h2>
+
+    <p>
+      Every app like Instagram, Netflix, or Amazon uses APIs built with frameworks
+      like Express to handle data.
+    </p>
+  </div>
+
+  <!-- TASK -->
+  <div class="card">
+    <h2>💡 Practice Task</h2>
+
+    <ul>
+      <li>Create Express server</li>
+      <li>Add 2 routes (GET & POST)</li>
+      <li>Send JSON response</li>
+      <li>Test using browser or Postman</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quiz">
+    <h2>📝 Quiz</h2>
+
+    <p>1. Express is used for?</p>
+    <label><input type="radio" name="q1"> Styling</label><br>
+    <label><input type="radio" name="q1"> Backend APIs</label><br>
+
+    <p>2. Middleware is used for?</p>
+    <label><input type="radio" name="q2"> Animation</label><br>
+    <label><input type="radio" name="q2"> Request processing</label><br>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="success" style="display:none;">
+    ✅ Quiz submitted successfully. Continue your course.
+  </div>
+
+  <!-- NEXT -->
+  <button onclick="nextWeek()">Next Week →</button>
+
+</div>
+
+<script>
+function submitQuiz() {
+  localStorage.setItem("backend-week3", "completed");
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("success").style.display = "block";
+}
+
+function nextWeek() {
+  window.location.href = "week4.html";
+}
+</script>
+
+</body>
+</html>

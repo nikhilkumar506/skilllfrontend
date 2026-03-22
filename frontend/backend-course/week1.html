@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backend Development - Week 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- ✅ CORRECT CSS PATH -->
+  <link rel="stylesheet" href="../assets/css/backend-course.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Week 1: Backend Foundations</h1>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>📌 What is Backend?</h2>
+    <p>
+      Backend is the core part of any application that runs behind the scenes.
+      It handles data processing, authentication, and communication with the database.
+    </p>
+
+    <p>
+      Whenever a user performs an action like login, signup, or data fetch,
+      the backend processes that request and returns a response.
+    </p>
+  </div>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>🌐 How Web Applications Work</h2>
+
+    <ul>
+      <li>User interacts with frontend</li>
+      <li>Frontend sends request to backend</li>
+      <li>Backend processes logic</li>
+      <li>Database is queried</li>
+      <li>Response is returned to frontend</li>
+    </ul>
+  </div>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>⚙️ Backend Responsibilities</h2>
+
+    <ul>
+      <li>Data storage & management</li>
+      <li>User authentication</li>
+      <li>API handling</li>
+      <li>Business logic execution</li>
+      <li>Security implementation</li>
+    </ul>
+  </div>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>🧠 Frontend vs Backend</h2>
+
+    <table>
+      <tr>
+        <th>Frontend</th>
+        <th>Backend</th>
+      </tr>
+      <tr>
+        <td>User Interface</td>
+        <td>Server Logic</td>
+      </tr>
+      <tr>
+        <td>HTML, CSS, JS</td>
+        <td>Node.js, Database</td>
+      </tr>
+      <tr>
+        <td>User Interaction</td>
+        <td>Data Processing</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>🧰 Backend Tech Stack</h2>
+
+    <ul>
+      <li>Node.js (Runtime)</li>
+      <li>Express.js (Framework)</li>
+      <li>MongoDB (Database)</li>
+      <li>JWT (Authentication)</li>
+    </ul>
+  </div>
+
+  <!-- SECTION -->
+  <div class="card">
+    <h2>🔗 What is API?</h2>
+
+    <p>API allows frontend and backend to communicate.</p>
+
+    <pre>
+POST /api/login
+GET /api/users
+    </pre>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quiz">
+    <h2>📝 Quiz</h2>
+
+    <p>1. Backend handles?</p>
+    <label><input type="radio" name="q1"> UI</label><br>
+    <label><input type="radio" name="q1"> Server Logic</label><br>
+
+    <p>2. API is used for?</p>
+    <label><input type="radio" name="q2"> Styling</label><br>
+    <label><input type="radio" name="q2"> Communication</label><br>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <div id="success" class="success" style="display:none;">
+    ✅ Quiz submitted successfully. Continue your course.
+  </div>
+
+  <button onclick="nextWeek()">Next Week →</button>
+
+</div>
+
+<script>
+function submitQuiz() {
+  localStorage.setItem("backend-week1", "completed");
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("success").style.display = "block";
+}
+
+function nextWeek() {
+  window.location.href = "week2.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backend Development - Week 6</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../assets/css/backend-course.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Week 6: Final Project & Deployment</h1>
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>📌 Final Goal</h2>
+    <p>
+      In this week, you will build a complete backend project and deploy it online.
+      This project can be added to your resume and portfolio.
+    </p>
+  </div>
+
+  <!-- PROJECT -->
+  <div class="card">
+    <h2>🚀 Project: User Authentication System</h2>
+
+    <p>You will build:</p>
+
+    <ul>
+      <li>User Signup API</li>
+      <li>User Login API</li>
+      <li>Password hashing (bcrypt)</li>
+      <li>JWT authentication</li>
+      <li>Protected routes</li>
+      <li>MongoDB database</li>
+    </ul>
+  </div>
+
+  <!-- STRUCTURE -->
+  <div class="card">
+    <h2>📂 Project Structure</h2>
+
+    <pre>
+backend/
+  models/
+  routes/
+  controllers/
+  server.js
+    </pre>
+  </div>
+
+  <!-- FLOW -->
+  <div class="card">
+    <h2>🔄 Project Flow</h2>
+
+    <ul>
+      <li>User signs up → Data stored in DB</li>
+      <li>User logs in → Password verified</li>
+      <li>JWT token generated</li>
+      <li>Token used for protected routes</li>
+    </ul>
+  </div>
+
+  <!-- CODE -->
+  <div class="card">
+    <h2>⚙️ Sample Backend Code</h2>
+
+    <pre>
+app.post("/signup", async (req, res) => {
+  const hashed = await bcrypt.hash(req.body.password, 10);
+  await User.create({ ...req.body, password: hashed });
+  res.send("User created");
+});
+
+app.post("/login", async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  const match = await bcrypt.compare(req.body.password, user.password);
+
+  if (!match) return res.send("Invalid credentials");
+
+  const token = jwt.sign({ id: user._id }, "secret");
+  res.json({ token });
+});
+    </pre>
+  </div>
+
+  <!-- DEPLOY -->
+  <div class="card">
+    <h2>🌍 Deployment (Go Live)</h2>
+
+    <p>You can deploy your backend using:</p>
+
+    <ul>
+      <li>Render</li>
+      <li>Railway</li>
+      <li>Vercel (frontend)</li>
+    </ul>
+
+    <p>
+      After deployment, your API will be accessible globally.
+    </p>
+  </div>
+
+  <!-- ENV -->
+  <div class="card">
+    <h2>🔐 Environment Variables</h2>
+
+    <pre>
+PORT=5000
+MONGO_URI=your_database_url
+JWT_SECRET=your_secret_key
+    </pre>
+  </div>
+
+  <!-- REAL WORLD -->
+  <div class="card">
+    <h2>🧠 Real-World Impact</h2>
+
+    <p>
+      This project is similar to real-world applications used in companies.
+      Completing this means you understand backend fundamentals.
+    </p>
+  </div>
+
+  <!-- TASK -->
+  <div class="card">
+    <h2>💡 Final Task</h2>
+
+    <ul>
+      <li>Build full backend project</li>
+      <li>Test APIs using Postman</li>
+      <li>Deploy your project</li>
+      <li>Share API link</li>
+    </ul>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="card" id="quiz">
+    <h2>📝 Final Quiz</h2>
+
+    <p>1. JWT is used for?</p>
+    <label><input type="radio" name="q1"> Authentication</label><br>
+    <label><input type="radio" name="q1"> Styling</label><br>
+
+    <p>2. Where is user data stored?</p>
+    <label><input type="radio" name="q2"> Database</label><br>
+    <label><input type="radio" name="q2"> Browser</label><br>
+
+    <button onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" class="success" style="display:none;">
+    🎉 Congratulations! You have completed the Backend Course.
+  </div>
+
+</div>
+
+<script>
+function submitQuiz() {
+  localStorage.setItem("backend-week6", "completed");
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("success").style.display = "block";
+}
+</script>
+
+</body>
+</html>
