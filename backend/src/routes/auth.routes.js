@@ -12,10 +12,10 @@ const authMiddleware = require("../middleware/auth.middleware");
 // ================= AUTH ROUTES =================
 
 // Register new user
-router.post("/register", register);
+//router.post("/register", register);
 
 // Login user
-router.post("/login", login);
+//router.post("/login", login);
 
 // Get logged-in user (JWT protected)
 router.get("/me", authMiddleware, me);
