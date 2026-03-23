@@ -19,17 +19,8 @@ async function loadCourses() {
       headers: token ? { Authorization: "Bearer " + token } : {}
     });
 
-    if (!res.ok) {
-      throw new Error("Courses API failed");
-    }
-
     const data = await res.json();
     console.log("📦 Courses API response:", data);
-
-    if (!Array.isArray(data) || data.length === 0) {
-      grid.innerHTML = "<p class='muted'>No courses available</p>";
-      return;
-    }
 
     grid.innerHTML = "";
 
@@ -37,74 +28,84 @@ async function loadCourses() {
       const card = document.createElement("div");
       card.className = "course-card";
 
-      // 🔥 BUTTON TEXT LOGIC
       let btnText = "Enroll";
       if (course.isEnrolled && !course.isPaid) btnText = "Unlock Course";
       if (course.isEnrolled && course.isPaid) btnText = "Start Learning";
 
       card.innerHTML = `
         <h3>${course.title}</h3>
-        <p class="muted">${course.description || ""}</p>
+        <p>${course.description || ""}</p>
         <button class="primary-btn">${btnText}</button>
       `;
 
       const btn = card.querySelector("button");
 
-      // 🔥 BUTTON ACTION LOGIC
+      // 🔥 ACTION LOGIC
       if (!course.isEnrolled) {
-        btn.addEventListener("click", () => {
-          openEnrollModal(course._id, course.title);
-        });
+        btn.onclick = () => openEnrollModal(course._id, course.title);
 
       } else if (!course.isPaid) {
-        btn.addEventListener("click", async () => {
-          if (!token) {
-            alert("Please login first");
-            window.location.href = "../auth/login.html";
-            return;
-          }
-
-          try {
-            const res = await fetch(`${API_BASE}/enroll/unlock`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token
-              },
-              body: JSON.stringify({
-                courseId: course._id
-              })
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-              alert("🔓 Course unlocked!");
-              loadCourses();
-            } else {
-              alert(data.message || "Unlock failed");
-            }
-
-          } catch (err) {
-            console.error("❌ Unlock error:", err);
-            alert("Server error");
-          }
-        });
+        btn.onclick = () => startPayment(course._id); // 🔥 PAYMENT
 
       } else {
-        btn.addEventListener("click", () => {
-          goToWeek1();
-        });
+        btn.onclick = () => goToWeek1();
       }
 
       grid.appendChild(card);
     });
 
-    console.log("✅ Courses rendered");
-
   } catch (err) {
     console.error("❌ Load courses error:", err);
-    grid.innerHTML = "<p class='muted'>Failed to load courses</p>";
+    grid.innerHTML = "<p>Failed to load courses</p>";
+  }
+}
+
+/* ================= PAYMENT FUNCTION ================= */
+async function startPayment(courseId) {
+  try {
+    const res = await fetch(`${API_BASE}/payment/create-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      }
+    });
+
+    const order = await res.json();
+
+    const options = {
+      key: "rzp_test_xxxxxxxx", // 🔥 apni key daalo
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.id,
+
+      name: "Zertix",
+      description: "Unlock Course",
+
+      handler: async function (response) {
+        await fetch(`${API_BASE}/payment/verify-payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          },
+          body: JSON.stringify({
+            paymentId: response.razorpay_payment_id,
+            courseId
+          })
+        });
+
+        alert("🎉 Payment successful!");
+        loadCourses();
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    console.error("❌ Payment error:", err);
+    alert("Payment failed");
   }
 }
 
@@ -172,23 +173,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      // ✅ SUCCESS (201)
+      // ✅ SUCCESS
       if (res.status === 201) {
         alert("🎉 Enrollment successful");
         closeEnrollModal();
-        loadCourses();
+        startPayment(courseId); // 🔥 DIRECT PAYMENT
         return;
       }
 
-      // 🔥 FIX: ALREADY ENROLLED (409)
+      // 🔥 ALREADY ENROLLED
       if (res.status === 409) {
-        alert("You are already enrolled");
+        alert("Already enrolled → proceed to payment");
         closeEnrollModal();
-        loadCourses(); // 🔥 important
+        startPayment(courseId); // 🔥 ALSO OPEN PAYMENT
         return;
       }
 
-      // ❌ Other errors
       alert(data.message || "Enrollment failed");
 
     } catch (err) {
