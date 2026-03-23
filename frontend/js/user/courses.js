@@ -1,6 +1,7 @@
 console.log("✅ Browse Courses JS loaded");
 
-const API_BASE = "https://skilllcertify-backend.onrender.com/api";const token = localStorage.getItem("token");
+const API_BASE = "https://skilllcertify-backend.onrender.com/api";
+const token = localStorage.getItem("token");
 
 /* ================= LOAD COURSES ================= */
 async function loadCourses() {
@@ -14,7 +15,9 @@ async function loadCourses() {
   grid.innerHTML = "<p class='muted'>Loading courses...</p>";
 
   try {
-    const res = await fetch(`${API_BASE}/courses`);
+    const res = await fetch(`${API_BASE}/courses`, {
+      headers: token ? { Authorization: "Bearer " + token } : {}
+    });
 
     if (!res.ok) {
       throw new Error("Courses API failed");
@@ -34,27 +37,63 @@ async function loadCourses() {
       const card = document.createElement("div");
       card.className = "course-card";
 
+      // 🔥 BUTTON TEXT LOGIC
+      let btnText = "Enroll";
+      if (course.isEnrolled && !course.isPaid) btnText = "Unlock Course";
+      if (course.isEnrolled && course.isPaid) btnText = "Start Learning";
+
       card.innerHTML = `
         <h3>${course.title}</h3>
         <p class="muted">${course.description || ""}</p>
-
-        <button class="primary-btn">
-          ${course.isEnrolled ? "Go to Week 1" : "Enroll"}
-        </button>
+        <button class="primary-btn">${btnText}</button>
       `;
 
       const btn = card.querySelector("button");
 
-      // ✅ If already enrolled → direct access
-      if (course.isEnrolled) {
-        btn.addEventListener("click", () => {
-          goToWeek1();
-        });
-      } 
-      // ✅ Not enrolled → open modal
-      else {
+      // 🔥 BUTTON ACTION LOGIC
+      if (!course.isEnrolled) {
         btn.addEventListener("click", () => {
           openEnrollModal(course._id, course.title);
+        });
+
+      } else if (!course.isPaid) {
+        btn.addEventListener("click", async () => {
+          if (!token) {
+            alert("Please login first");
+            window.location.href = "../auth/login.html";
+            return;
+          }
+
+          try {
+            const res = await fetch(`${API_BASE}/enroll/unlock`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+              },
+              body: JSON.stringify({
+                courseId: course._id
+              })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+              alert("🔓 Course unlocked!");
+              loadCourses();
+            } else {
+              alert(data.message || "Unlock failed");
+            }
+
+          } catch (err) {
+            console.error("❌ Unlock error:", err);
+            alert("Server error");
+          }
+        });
+
+      } else {
+        btn.addEventListener("click", () => {
+          goToWeek1();
         });
       }
 
@@ -127,27 +166,23 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: JSON.stringify({
           courseId,
-          name,
-          email,
-          phone
+          courseTitle: document.getElementById("courseTitle").value
         })
       });
 
       const data = await res.json();
 
-      // ✅ New enrollment
       if (res.ok) {
         alert("🎉 Enrollment successful");
         closeEnrollModal();
-        goToWeek1();
+        loadCourses(); // 🔥 IMPORTANT (no redirect)
         return;
       }
 
-      // ✅ Already enrolled
       if (data.message === "Already enrolled") {
         alert("You are already enrolled");
         closeEnrollModal();
-        goToWeek1();
+        loadCourses();
         return;
       }
 
