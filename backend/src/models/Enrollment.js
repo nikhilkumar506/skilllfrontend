@@ -2,39 +2,61 @@ const mongoose = require("mongoose");
 
 const enrollmentSchema = new mongoose.Schema({
 
-  user:{
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:"User",
-    required:true
+    ref: "User",
+    required: true
   },
 
-  courseId:{
-    type:String,
-    required:true
+  courseId: {
+    type: String,
+    required: true
   },
 
-  courseTitle:String,
-
-  enrolledAt:{
-    type:Date,
-    default:Date.now
+  courseTitle: {
+    type: String,
+    default: ""
   },
 
-  progress:{
-    type:Number,
-    default:0
+  enrolledAt: {
+    type: Date,
+    default: Date.now
   },
 
-  lastLesson:{
-    type:String,
-    default:"lesson1"
+  progress: {
+    type: Number,
+    default: 0
   },
 
-  completed:{
-    type:Boolean,
-    default:false
+  lastLesson: {
+    type: String,
+    default: "lesson1"
+  },
+
+  completed: {
+    type: Boolean,
+    default: false
+  },
+
+  // 🔥 PAYMENT SYSTEM FIELDS
+  paid: {
+    type: Boolean,
+    default: false
+  },
+
+  paymentId: {
+    type: String,
+    default: null
+  },
+
+  paymentDate: {
+    type: Date,
+    default: null
   }
 
 });
 
-module.exports = mongoose.model("Enrollment", enrollmentSchema);
+// 🔥 Prevent duplicate enrollment (important)
+enrollmentSchema.index({ user: 1, courseId: 1 }, { unique: true });
+
+module.exports = mongoose.models.Enrollment || mongoose.model("Enrollment", enrollmentSchema);
