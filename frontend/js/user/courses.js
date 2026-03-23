@@ -172,20 +172,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      if (res.ok) {
+      // ✅ SUCCESS (201)
+      if (res.status === 201) {
         alert("🎉 Enrollment successful");
-        closeEnrollModal();
-        loadCourses(); // 🔥 IMPORTANT (no redirect)
-        return;
-      }
-
-      if (data.message === "Already enrolled") {
-        alert("You are already enrolled");
         closeEnrollModal();
         loadCourses();
         return;
       }
 
+      // 🔥 FIX: ALREADY ENROLLED (409)
+      if (res.status === 409) {
+        alert("You are already enrolled");
+        closeEnrollModal();
+        loadCourses(); // 🔥 important
+        return;
+      }
+
+      // ❌ Other errors
       alert(data.message || "Enrollment failed");
 
     } catch (err) {
