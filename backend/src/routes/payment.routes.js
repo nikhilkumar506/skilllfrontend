@@ -45,5 +45,9 @@ router.post("/verify-payment", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// ✅ TEMP TEST ROUTE (GET)
+router.get("/create-order", async (req, res) => {
+  res.json({ message: "Payment route working ✅" });
+});
 
 module.exports = router;
