@@ -10,20 +10,19 @@ const paymentRoutes = require("./src/routes/payment.routes");
 
 const app = express();
 
-/* ================= CORS ================= */
 app.use(cors());
 app.use(express.json());
 
-/* ================= ROUTES ================= */
+// ROUTES
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enroll", enrollmentRoutes);
 app.use("/api/payment", paymentRoutes);
 
-/* ================= HEALTH ================= */
+// TEST
 app.get("/", (req, res) => {
-  res.json({ status: "API running ✅" });
+  res.json({ status: "SkilllCertify API running" });
 });
 
 module.exports = app;
