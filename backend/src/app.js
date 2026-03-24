@@ -1,38 +1,29 @@
 const express = require("express");
 const cors = require("cors");
 
-const authRoutes = require("./routes/auth.routes");
-const courseRoutes = require("./routes/course.routes");
-const enrollmentRoutes = require("./routes/enrollment.routes");
-const adminRoutes = require("./routes/admin.routes");
-const paymentRoutes = require("./routes/payment.routes"); // 🔥 ADD THIS
+// ✅ FIXED PATHS
+const authRoutes = require("./src/routes/auth.routes");
+const courseRoutes = require("./src/routes/course.routes");
+const enrollmentRoutes = require("./src/routes/enrollment.routes");
+const adminRoutes = require("./src/routes/admin.routes");
+const paymentRoutes = require("./src/routes/payment.routes");
 
 const app = express();
 
-/* ================= CORS FIX ================= */
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-app.options("*", cors());
-
-/* ================= MIDDLEWARE ================= */
+/* ================= CORS ================= */
+app.use(cors());
 app.use(express.json());
 
-// =================admin routes===============//
-app.use("/api/admin", adminRoutes);
-
 /* ================= ROUTES ================= */
+app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enroll", enrollmentRoutes);
-app.use("/api/payment", paymentRoutes); // 🔥 ADD THIS
+app.use("/api/payment", paymentRoutes);
 
 /* ================= HEALTH ================= */
 app.get("/", (req, res) => {
-  res.json({ status: "SkilllCertify API running" });
+  res.json({ status: "API running ✅" });
 });
 
 module.exports = app;
